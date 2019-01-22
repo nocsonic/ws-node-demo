@@ -10,8 +10,8 @@ export function setupLogging(app) {
   // Development Logger
   // const env = server-config.util.getEnv('NODE_ENV');
 // error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
-  if(level === 'info') {
-    logger.add(new Winston.transports.Console({
+  if(level === 'error') {
+    logger.add(new Winston.transports.File({
         level: 'debug',
         format: Winston.format.combine(
                Winston.format.colorize(),
@@ -32,7 +32,7 @@ function setupExpress(app) {
   if(level === 'debug') {
     app.use(expressWinston.errorLogger({
       transports: [
-        new Winston.transports.Console({
+        new Winston.transports.File({
           format: Winston.format.combine(
                     Winston.format.colorize(),
                     Winston.format.json()
@@ -43,10 +43,10 @@ function setupExpress(app) {
   }
 
   // request logging
-  if(level === 'info') {
+  if(level === 'error') {
     app.use(expressWinston.logger({
       transports: [
-        new Winston.transports.Console({
+        new Winston.transports.File({
           format: Winston.format.combine(
                     Winston.format.colorize(),
                     Winston.format.json()
